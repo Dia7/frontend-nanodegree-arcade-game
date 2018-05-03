@@ -22,6 +22,18 @@ Enemy.prototype.update = function(dt) {
     //  You should multiply any movement by the dt parameter
     // which will ensure the game runs at the same speed for
     // all computers.
+    let i;
+        if (this.x < 505) {
+            // You should multiply any movement by the dt parameter
+            // which will ensure the game runs at the same speed for
+            // all computers.
+            this.x += dt * 15 * this.speed * Math.random();
+        } else {
+            i = Math.random() * yEnemies.length | 0 + 0;
+            this.y = yEnemies[i];
+            this.x = -100;
+        }
+    // check for collisions
 };
 
 // Draw the enemy on the screen, required method for game
@@ -31,12 +43,34 @@ Enemy.prototype.render = function() {
 
 // Now write your own player class
 const Player = function (x, y){
-    this.sprite = 'images/char-pink-girl.png';
+    this.sprite = 'images/Gem Blue.png';
     this.x = x;
     this.y = y;
 }
 // This class requires an update(), render() and
 // a handleInput() method.
+// Add updade method to Player constructor fn.
+Player.prototype.update = function(dt) {
+    //Return the player back once they hit water: With delay
+    if (this.y < 0) {
+        this.pauseKey = true; //stop keyboard
+        //this makes sure player does not dance randomly
+        setTimeout(() => {
+            this.pauseKey = false;
+        }, 1200);
+        //this is the actual functionality
+        setTimeout(() => {
+            this.x = 202;
+            this.y = 405;
+        }, 600);
+}};
+
+// Add render method to Player constructor fn.
+Player.prototype.render = function() {
+    ctx.drawImage(Resources.get(this.sprite), this.x, this.y);
+};
+
+// Add handleInput() method to Player constructor fn.
 
 
 // Now instantiate your objects.
