@@ -113,3 +113,26 @@ document.addEventListener('keyup', function(e) {
 
     player.handleInput(allowedKeys[e.keyCode]);
 });
+
+// add scores and lives
+
+// create the 'scores' div
+const body = document.getElementsByTagName('body');
+const scores = document.createElement('div');
+scores.setAttribute('class','theScores');
+document.body.appendChild(scores);
+
+// create the title h3
+const titleScores = document.createElement('h3');
+titleScores.textContent = 'Scores: ';
+titleScores.setAttribute('class', 'title-scores');
+titleScores.setAttribute('style', 'display: inline-block; margin: 0 auto;');
+
+scores.appendChild(titleScores);
+
+// create the points
+const points = document.createElement('h3');
+points.setAttribute('id', 'points');
+points.setAttribute('style', 'display: inline-block;');
+points.textContent = '0';
+scores.appendChild(points);
