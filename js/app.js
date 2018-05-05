@@ -1,5 +1,5 @@
 // Variables declarations
-let yEnemies = [60, 140, 220, 140, 60, 210];
+let verticalEnemyPos = [60, 140, 220, 140, 60, 210];
 
 // Enemies our player must avoid
 const Enemy = function(x, y, speed, sprite) {
@@ -29,9 +29,9 @@ Enemy.prototype.update = function(dt) {
             // all computers.
             this.x += dt * 15 * this.speed * Math.random();
         } else {
-            i = Math.random() * yEnemies.length | 0 + 0;
+            i = Math.random() * verticalEnemyPos.length | 0 + 0;
 
-            this.y = yEnemies[i];
+            this.y = verticalEnemyPos[i];
             this.x = -100;
         }
     // check for collisions
@@ -50,11 +50,12 @@ Enemy.prototype.render = function() {
 };
 
 // Now write your own player class
-const Player = function (x, y, lives){
+const Player = function (x, y, lives, scores){
     this.sprite = 'images/char-pink-girl.png';
     this.x = x;
     this.y = y;
     this.lives = lives;
+    this.scores = scores;
 
 };
 // This class requires an update(), render() and
@@ -64,11 +65,11 @@ Player.prototype.update = function(dt) {
     //Return the player back once they hit water: With delay
     if (this.y < 0) {
         this.pauseKey = true; //stop keyboard
-        //this makes sure player does not dance randomly
-        setTimeout(() => {
-            this.pauseKey = false;
-        }, 1200);
-        //this is the actual functionality
+        // //this makes sure player does not dance randomly
+        // setTimeout(() => {
+        //     this.pauseKey = false;
+        // }, 1200);
+        //the functionality
         setTimeout(() => {
             this.x = 202;
             this.y = 405;
@@ -91,6 +92,15 @@ Player.prototype.handleInput = function(key) {
         } else if (key === 'down' && this.y < 380) {
             this.y += 80;
         }
+        //Player should stays in canvas
+    if (this.x <= 2) this.x = 2;
+    if (this.x >= 400) this.x = 400;
+    // if (this.y >= 400 || this.y <= -60) {
+        this.y = 405;
+        player.scores += 10;
+        points.textContent = player.scores;
+    }
+
 };
 // Remove hearts after the collision occurs
 Player.prototype.livesCount = function () {
@@ -112,7 +122,7 @@ let enemy3 = new Enemy(-100, 140, 10, this.sprite);
 const allEnemies = [enemy1, enemy2, enemy3];
 
 // Place the player object in a variable called player
-const player = new Player(200, 400, 3);
+const player = new Player(200, 400, 3, 0);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
