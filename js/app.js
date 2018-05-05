@@ -62,18 +62,33 @@ const Player = function (x, y, lives, scores){
 // a handleInput() method.
 // Add updade() method to Player constructor fn.
 Player.prototype.update = function(dt) {
-    //Return the player back once they hit water: With delay
+    //Player go back when she reach the water
     if (this.y < 0) {
         this.pauseKey = true; //stop keyboard
-        // //this makes sure player does not dance randomly
-        // setTimeout(() => {
-        //     this.pauseKey = false;
-        // }, 1200);
-        //the functionality
+         //the functionality
         setTimeout(() => {
             this.x = 202;
             this.y = 405;
         }, 600);
+         //Player should stays in canvas
+    if (this.x <= 2) this.x = 2;
+    if (this.x >= 400) this.x = 400;
+    if (this.y >= 400 || this.y <= -60) {
+        this.y = 405;
+        player.scores += 10;
+    }
+        // update the scores
+    // if(this.y < 0) player.scores += 10;
+
+        points.innerHTML = player.scores;
+
+         // open the winning modal window
+    if (points.textContent === '50'){
+        winMode();
+        allEnemies.forEach(function(enemy) {
+            enemy.speed = 0;
+        });
+    }
 }};
 
 // Add render() method to Player constructor fn.
@@ -92,14 +107,7 @@ Player.prototype.handleInput = function(key) {
         } else if (key === 'down' && this.y < 380) {
             this.y += 80;
         }
-        //Player should stays in canvas
-    if (this.x <= 2) this.x = 2;
-    if (this.x >= 400) this.x = 400;
-    // if (this.y >= 400 || this.y <= -60) {
-        this.y = 405;
-        player.scores += 10;
-        points.textContent = player.scores;
-    }
+
 
 };
 // Remove hearts after the collision occurs
@@ -108,17 +116,19 @@ Player.prototype.livesCount = function () {
     hearts.removeChild(hearts.children[0]);
 
     this.lives -= 1;
-
-    // if (lives === 0){
-
-    // }
-
+    // open the losing modal window
+    if (this.lives === 0){
+        loseMode();
+        allEnemies.forEach(function(enemy) {
+            enemy.speed = 0;
+        });
+    }
 };
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
-let enemy1 = new Enemy(-100, 60, 20, this.sprite);
-let enemy2 = new Enemy(-100, 220, 40, this.sprite);
-let enemy3 = new Enemy(-100, 140, 10, this.sprite);
+let enemy1 = new Enemy(-100, 60, 10, this.sprite);
+let enemy2 = new Enemy(-100, 220, 20, this.sprite);
+let enemy3 = new Enemy(-100, 140, 5, this.sprite);
 const allEnemies = [enemy1, enemy2, enemy3];
 
 // Place the player object in a variable called player
@@ -131,7 +141,8 @@ document.addEventListener('keyup', function(e) {
         37: 'left',
         38: 'up',
         39: 'right',
-        40: 'down'
+        40: 'down',
+        32: 'space'
     };
 
     player.handleInput(allowedKeys[e.keyCode]);
@@ -141,9 +152,9 @@ document.addEventListener('keyup', function(e) {
 
 // create the 'scores' div
 const body = document.getElementsByTagName('body');
-const scores = document.createElement('div');
-scores.setAttribute('class','theScores');
-document.body.appendChild(scores);
+const myScores = document.createElement('div');
+myScores.setAttribute('class','theScores');
+document.body.appendChild(myScores);
 
 // create the title h3
 const titleScores = document.createElement('h3');
@@ -151,14 +162,14 @@ titleScores.textContent = 'Scores: ';
 titleScores.setAttribute('class', 'title-scores');
 titleScores.setAttribute('style', 'display: inline-block; margin: 0 auto;');
 
-scores.appendChild(titleScores);
+myScores.appendChild(titleScores);
 
 // create the points
 const points = document.createElement('h3');
 points.setAttribute('id', 'points');
 points.setAttribute('style', 'display: inline-block;');
 points.textContent = '0';
-scores.appendChild(points);
+myScores.appendChild(points);
 
 
 // create the "lives" container
@@ -193,3 +204,31 @@ const heart3 = document.createElement('li');
 heart3.setAttribute('class', 'heart');
 heart3.setAttribute('style', 'background: url(images/Heart.png); width: 30px; height: 50px; background-repeat: no-repeat; display: inline-block');
 heartsUl.appendChild(heart3);
+
+// Animation properties (when the player reach the water)
+
+// Modal functionality
+
+    const win = document.getElementById('WinMode');
+    const lose = document.getElementById('LoseMode');
+
+function winMode() {
+    win.setAttribute('style', 'display: block');
+    win.focus();
+}
+
+function loseMode() {
+    lose.setAttribute('style', 'display: block');
+    lose.focus();
+    titleLives.textContent = 'Lives: 0';
+}
+
+document.getElementById('click1').addEventListener('click', modalClick);
+
+document.getElementById('click2').addEventListener('click', modalClick);
+
+//Start new game on button click
+function modalClick() {
+    this.style.display = 'none';
+    location.reload();
+}
