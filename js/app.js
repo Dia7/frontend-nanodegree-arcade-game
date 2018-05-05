@@ -39,7 +39,7 @@ Enemy.prototype.update = function(dt) {
         Math.abs(this.y - player.y) < 78) {
         player.x = 202;
         player.y = 405;
-        player.lives -= 1;
+        player.livesCount();
     }
 
 };
@@ -50,11 +50,13 @@ Enemy.prototype.render = function() {
 };
 
 // Now write your own player class
-const Player = function (x, y){
+const Player = function (x, y, lives){
     this.sprite = 'images/char-pink-girl.png';
     this.x = x;
     this.y = y;
-}
+    this.lives = lives;
+
+};
 // This class requires an update(), render() and
 // a handleInput() method.
 // Add updade() method to Player constructor fn.
@@ -90,7 +92,18 @@ Player.prototype.handleInput = function(key) {
             this.y += 80;
         }
 };
+// Remove hearts after the collision occurs
+Player.prototype.livesCount = function () {
+    let hearts = document.getElementsByTagName('ul')[0];
+    hearts.removeChild(hearts.children[0]);
 
+    this.lives -= 1;
+
+    // if (lives === 0){
+
+    // }
+
+};
 // Now instantiate your objects.
 // Place all enemy objects in an array called allEnemies
 let enemy1 = new Enemy(-100, 60, 20, this.sprite);
@@ -99,7 +112,7 @@ let enemy3 = new Enemy(-100, 140, 10, this.sprite);
 const allEnemies = [enemy1, enemy2, enemy3];
 
 // Place the player object in a variable called player
-const player = new Player(200, 400);
+const player = new Player(200, 400, 3);
 
 // This listens for key presses and sends the keys to your
 // Player.handleInput() method. You don't need to modify this.
@@ -136,3 +149,37 @@ points.setAttribute('id', 'points');
 points.setAttribute('style', 'display: inline-block;');
 points.textContent = '0';
 scores.appendChild(points);
+
+
+// create the "lives" container
+const lives = document.createElement('div');
+lives.setAttribute('class', 'lives');
+document.body.appendChild(lives);
+
+// create the 'lives' title
+const titleLives = document.createElement('h3');
+titleLives.textContent = 'Lives: ';
+titleLives.setAttribute('class', 'title-lives');
+titleLives.setAttribute('style', 'display: inline-block; margin: 0;');
+lives.appendChild(titleLives);
+
+// the result measurment - starts with 3 hearts
+const heartsUl = document.createElement('ul');
+heartsUl.setAttribute('style', 'list-style-type: none; display: inline-block; padding: 0');
+lives.appendChild(heartsUl);
+
+const heart1 = document.createElement('li');
+heart1.setAttribute('class', 'heart');
+heart1.setAttribute('style', 'background: url(images/Heart.png); width: 30px; height: 50px; background-repeat: no-repeat; display: inline-block');
+
+heartsUl.appendChild(heart1);
+
+const heart2 = document.createElement('li');
+heart2.setAttribute('class', 'heart');
+heart2.setAttribute('style', 'background: url(images/Heart.png); width: 30px; height: 50px; background-repeat: no-repeat; display: inline-block');
+heartsUl.appendChild(heart2);
+
+const heart3 = document.createElement('li');
+heart3.setAttribute('class', 'heart');
+heart3.setAttribute('style', 'background: url(images/Heart.png); width: 30px; height: 50px; background-repeat: no-repeat; display: inline-block');
+heartsUl.appendChild(heart3);
