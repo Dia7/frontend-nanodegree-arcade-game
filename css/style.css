@@ -1,5 +1,14 @@
-body {
+body, #click1, #click2 {
     text-align: center;
+    font-family: 'Pangolin', cursive;
+    font-size: 1rem;
+    background-color: #E0E0E0;
+}
+
+#click1, #click2 {
+    font-size: 1em;
+    font-weight: bold;
+    border-radius: 15px !important;
 }
 
 .modal {
@@ -9,9 +18,12 @@ body {
     position: fixed; 
     z-index: 1;
     overflow: auto;
-    background-color: pink;
+    background-color: #FFE082;
     margin: 15% 24%;
+    border-radius: 15px;
+    box-shadow: 0 5px 7px 0 rgba(0, 0, 0, 0.3), 0 6px 20px 0 rgba(0, 0, 0, 0.2);
 }
+
 .modalHeader{
     font-size: 2em;
     margin-bottom: 0;
@@ -20,9 +32,26 @@ body {
 
 #click1, #click2 {
     width: 40%;
-    background-color: yellow;
+    background-color: #66BB6A;
     padding: 5px;
     border-radius: 3px;
     margin-bottom: 20px;
     cursor: pointer;
+}
+
+/*To make the rest of content darken, when the modal shows*/
+/*https://stackoverflow.com/questions/31054353/darken-my-entire-page-when-dialog-window-opens-not-modal-or-popup-and-add-a-f*/
+#page-mask {
+    display: none; 
+    background: rgba(0, 0, 0, 0.5);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+}
+
+.info p{
+    font-size: 1em;
+    text-transform: uppercase;
 }
