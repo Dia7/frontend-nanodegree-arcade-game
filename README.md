@@ -1,6 +1,27 @@
-frontend-nanodegree-arcade-game
+Frogger Game
 ===============================
 
-Students should use this [rubric](https://review.udacity.com/#!/projects/2696458597/rubric) for self-checking their submission. Make sure the functions you write are **object-oriented** - either class functions (like Player and Enemy) or class prototype functions such as Enemy.prototype.checkCollisions, and that the keyword 'this' is used appropriately within your class and class prototype functions to refer to the object the function is called upon. Also be sure that the **readme.md** file is updated with your instructions on both how to 1. Run and 2. Play your arcade game.
+## Introduction
+The game is developed by the requirements - [rubric](https://review.udacity.com/#!/projects/2696458597/rubric). The functions are **object-oriented**. 
 
-For detailed instructions on how to get started, check out this [guide](https://docs.google.com/document/d/1v01aScPjSWCCWQLIpFqvg3-vXLH2e8_SZQKC8jNO0Dc/pub?embedded=true).
+## How the game works
+ - After cloning/downloading the repository, use the `index.html` file to run the game.
+ - [Frogger Game](https://dia7.github.io/frontend-nanodegree-arcade-game/)
+ 
+Files:
+* `index.html`: loads style and js 
+* `css/styles.css`
+* `js` folder: handles all the game logic.Has 3 files:
+    - resources.js
+    - engine.js
+    - app.js
+    
+ ## Instructions
+Use the arrow keys to move the player. The player should avoid the bugs, crossing the canvas, because the collisions are deadliest and they take lives (hearts). The player has 3 lives. The game ends when the player loses all 3 lives. If the player manage to reach the water aria 5 times - he/she wins the game.
+ 
+ ## Basic functionality
+ There are two game objects - `Enemy` class and `Player` class. All the required methods are implemented on the Prototype objects of the classes. 
+ 
+ ## Resources  
+* [Office Hours: P3: Understanding the engine.js](https://www.youtube.com/watch?v=oLSu3zc2jSA)
+* [Page mask when the modal window popup](https://stackoverflow.com/questions/31054353/darken-my-entire-page-when-dialog-window-opens-not-modal-or-popup-and-add-a-f)
