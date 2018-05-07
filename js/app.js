@@ -1,3 +1,9 @@
+
+/*jslint node: true */
+/*jshint strict:false */
+/* jshint -W097 */
+/* jshint node: true */
+"use strict";
 // Variables declarations
 let verticalEnemyPos = [60, 140, 220, 140, 60, 210];
 
@@ -61,6 +67,9 @@ const Player = function (x, y, lives, scores){
 // a handleInput() method.
 // Add updade() method to Player constructor fn.
 Player.prototype.update = function(dt) {
+    //Player should stays in canvas
+    if (this.x <= 2) this.x = 2;
+    if (this.x >= 400) this.x = 400;
     //Player go back when she reach the water
     if (this.y < 0) {
         this.pauseKey = true; //stop keyboard
@@ -69,16 +78,12 @@ Player.prototype.update = function(dt) {
             this.x = 202;
             this.y = 405;
         }, 600);
-    //Player should stays in canvas
-    if (this.x <= 2) this.x = 2;
-    if (this.x >= 400) this.x = 400;
     if (this.y >= 400 || this.y <= -60) {
         this.y = 405;
-        player.scores += 10;
+        this.scores += 10;
     }
 
         // update the scores
-        // if(this.y < 0) player.scores += 10;
         points.innerHTML = player.scores;
 
     // open the winning modal window
